@@ -1,0 +1,10 @@
+inherited ViewHerancasBuscar1: TViewHerancasBuscar1
+  Caption = 'ViewHerancasBuscar1'
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited pnTotal: TPanel
+    inherited lbTotal: TLabel
+      ExplicitLeft = 726
+    end
+  end
+end

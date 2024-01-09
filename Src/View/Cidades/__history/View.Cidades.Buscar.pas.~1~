@@ -1,0 +1,25 @@
+unit View.Cidades.Buscar;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, View.Herancas.Buscar, Data.DB,
+  Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, Vcl.Grids, Vcl.DBGrids;
+
+type
+  TViewHerancasBuscar1 = class(TViewHerancasBuscar)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  ViewHerancasBuscar1: TViewHerancasBuscar1;
+
+implementation
+
+{$R *.dfm}
+
+end.

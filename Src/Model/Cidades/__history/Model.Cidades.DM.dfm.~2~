@@ -1,0 +1,21 @@
+object ModelCidadesDM: TModelCidadesDM
+  OldCreateOrder = False
+  Height = 150
+  Width = 215
+  object FDQuery1: TFDQuery
+    Left = 24
+    Top = 8
+  end
+  object FDQuery2: TFDQuery
+    Left = 128
+    Top = 16
+  end
+  object DataSource1: TDataSource
+    Left = 24
+    Top = 80
+  end
+  object DataSource2: TDataSource
+    Left = 128
+    Top = 80
+  end
+end

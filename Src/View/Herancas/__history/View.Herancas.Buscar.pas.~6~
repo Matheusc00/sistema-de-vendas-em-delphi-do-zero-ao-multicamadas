@@ -1,0 +1,128 @@
+unit View.Herancas.Buscar;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.Grids, Vcl.DBGrids,
+  Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls;
+
+type
+  TViewHerancasBuscar = class(TForm)
+    Panel1: TPanel;
+    Panel2: TPanel;
+    pnRodape: TPanel;
+    Label1: TLabel;
+    edtBuscar: TEdit;
+    RadioGroup1: TRadioGroup;
+    btnCadastrar: TBitBtn;
+    btnUltilizar: TBitBtn;
+    btnFechar: TBitBtn;
+    DBGrid1: TDBGrid;
+    pnTotal: TPanel;
+    lbTotal: TLabel;
+    DataSource1: TDataSource;
+    procedure btnFecharClick(Sender: TObject);
+    procedure btnUltilizarClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure edtBuscarKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure edtBuscarKeyPress(Sender: TObject; var Key: Char);
+    procedure edtBuscarChange(Sender: TObject);
+    procedure DBGrid1DblClick(Sender: TObject);
+    procedure DBGrid1KeyPress(Sender: TObject; var Key: Char);
+  private
+
+  protected
+    procedure BuscarDados; virtual;
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  ViewHerancasBuscar: TViewHerancasBuscar;
+
+implementation
+
+{$R *.dfm}
+
+procedure TViewHerancasBuscar.btnFecharClick(Sender: TObject);
+begin
+  if(DataSource1.DataSet.IsEmpty) then
+  raise Exception.Create('Selecione um registro');
+
+  Self.Close;
+  Self.ModalResult := mrCancel;
+end;
+
+procedure TViewHerancasBuscar.btnUltilizarClick(Sender: TObject);
+begin
+  Self.Close;
+  Self.ModalResult := mrOk;
+end;
+
+procedure TViewHerancasBuscar.edtBuscarChange(Sender: TObject);
+begin
+  Self.BuscarDados;
+end;
+
+procedure TViewHerancasBuscar.BuscarDados;
+begin
+  lbTotal.Caption := 'Registro localizados: 000000';
+  if (DataSource1.DataSet.IsEmpty) then
+    Exit;
+
+  lbTotal.Caption := 'Registro localizados: ' + FormatFloat('000000', DataSource1.DataSet.RecordCount);
+
+end;
+
+procedure TViewHerancasBuscar.DBGrid1DblClick(Sender: TObject);
+begin
+  btnUltilizar.Click;
+end;
+
+procedure TViewHerancasBuscar.DBGrid1KeyPress(Sender: TObject; var Key: Char);
+begin
+  if (Key = #13) then
+  btnUltilizar.Click;
+
+end;
+
+procedure TViewHerancasBuscar.edtBuscarKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  case(Key) of
+    VK_UP: DataSource1.DataSet.Prior;
+    VK_DOWN: DataSource1.DataSet.Next;
+  end;
+end;
+
+procedure TViewHerancasBuscar.edtBuscarKeyPress(Sender: TObject; var Key: Char);
+begin
+  if (Key = #13)and(not DataSource1.DataSet.IsEmpty) then
+  btnUltilizar.Click;
+
+end;
+
+procedure TViewHerancasBuscar.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  case(Key) of
+    VK_F4:
+    begin
+      if (ssAlt in Shift) then
+        Key := 0;
+    end;
+    VK_ESCAPE : btnFechar.Click;
+  end;
+end;
+
+procedure TViewHerancasBuscar.FormShow(Sender: TObject);
+begin
+  Self.ModalResult := mrCancel;
+  edtBuscar.SetFocus;
+end;
+
+end.
